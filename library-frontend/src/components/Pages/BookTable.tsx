@@ -14,7 +14,7 @@ const BookTable = () => {
 
   useEffect(
     function getBooks() {
-      const books = fetch("http://localhost:5032/api/book");
+      const books = fetch("/api/book");
       Promise.all([books]).then((responses) => {
         var books = responses[0].json();
         Promise.all([books]).then((data) => {

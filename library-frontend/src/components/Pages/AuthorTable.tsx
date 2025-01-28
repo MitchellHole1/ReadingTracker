@@ -17,7 +17,7 @@ const AuthorTable = () => {
   useEffect(
     function getAuthors() {
       const Authors = fetch(
-        "http://localhost:5032/api/author?PageNumber=" +
+        "/api/author?PageNumber=" +
           pageState.currentPage +
           "&PageSize=" +
           pageState.limit

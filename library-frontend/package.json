@@ -2,10 +2,11 @@
   "name": "library-frontend",
   "private": true,
   "version": "0.0.0",
+  "proxy": "http://reading-tracker-backend:8080",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {

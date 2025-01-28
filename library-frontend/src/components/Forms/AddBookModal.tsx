@@ -16,7 +16,7 @@ const AddBookModal = ({ show, handleClose, handleShow }: Props) => {
 
   useEffect(
     function getGenres() {
-      const books = fetch("http://localhost:5032/api/genre");
+      const books = fetch("/api/genre");
       Promise.all([books]).then((responses) => {
         var books = responses[0].json();
         Promise.all([books]).then((data) => {
@@ -46,7 +46,7 @@ const AddBookModal = ({ show, handleClose, handleShow }: Props) => {
 
   const addBook = () => {
     console.log("Sending request");
-    fetch("http://localhost:5032/api/book", {
+    fetch("/api/book", {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",

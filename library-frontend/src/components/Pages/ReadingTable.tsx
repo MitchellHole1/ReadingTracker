@@ -7,7 +7,7 @@ const ReadingTable = () => {
 
   useEffect(
     function getReadingSessions() {
-      const readings = fetch("http://localhost:5032/api/ReadingSession");
+      const readings = fetch("/api/ReadingSession");
       Promise.all([readings]).then((responses) => {
         var readings = responses[0].json();
         Promise.all([readings]).then((data) => {

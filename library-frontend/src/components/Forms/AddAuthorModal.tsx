@@ -18,7 +18,7 @@ const AddAuthorModal = ({ show, handleClose, handleShow }: Props) => {
   }
 
   const addAuthor = () => {
-    fetch("http://localhost:5032/api/author", {
+    fetch("/api/author", {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",

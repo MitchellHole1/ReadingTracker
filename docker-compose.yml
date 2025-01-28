@@ -1,0 +1,35 @@
+version: '3.4'
+
+networks:
+  reading-tracker:
+    driver: bridge
+
+services:
+  reading-tracker-frontend:
+    image: mitch/my-reading-tracker.ui:${TAG:-latest}
+    depends_on:
+      reading-tracker-backend:
+        condition: service_started
+    container_name: reading-tracker-frontend
+    ports:
+      - "3000:80"
+    build:
+      context: ./library-frontend
+      dockerfile: ./Dockerfile
+    restart: always
+    networks:
+      - reading-tracker
+
+  reading-tracker-backend:
+    image: mitch/my-reading-tracker.api:${TAG:-latest}
+    container_name: reading-tracker-backend
+    ports:
+      - "5099:8080"
+    build:
+      context: ./MyReadingTracker/MyReadingTracker
+      dockerfile: ./Dockerfile
+    restart: always
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    networks:
+      - reading-tracker
