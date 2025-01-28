@@ -5,6 +5,10 @@ const ReadingTable = () => {
   const [readingSessionState, setReadingSessionState] = useState([]);
   const [value, setValue] = useState(0); // integer state
 
+  useEffect(() => {
+    document.title = "Reading Tracker";
+  });
+  
   useEffect(
     function getReadingSessions() {
       const readings = fetch("/api/ReadingSession");

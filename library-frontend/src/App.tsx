@@ -9,9 +9,6 @@ import AuthorTable from "./components/Pages/AuthorTable";
 import BookTable from "./components/Pages/BookTable";
 
 function App() {
-  useEffect(() => {
-    document.title = "Reading Tracker";
-  });
 
   return (
     <Router>

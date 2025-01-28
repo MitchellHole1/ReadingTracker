@@ -12,6 +12,10 @@ const BookTable = () => {
   };
   const handleShow = () => setShow(true);
 
+  useEffect(() => {
+    document.title = "Books";
+  });
+
   useEffect(
     function getBooks() {
       const books = fetch("/api/book");

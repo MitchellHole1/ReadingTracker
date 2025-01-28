@@ -14,6 +14,10 @@ const AuthorTable = () => {
   };
   const handleShow = () => setShow(true);
 
+  useEffect(() => {
+    document.title = "Authors";
+  });
+
   useEffect(
     function getAuthors() {
       const Authors = fetch(
