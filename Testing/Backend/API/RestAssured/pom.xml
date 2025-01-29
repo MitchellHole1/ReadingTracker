@@ -19,13 +19,6 @@
     </properties>
 
     <dependencies>
-        <!-- Allure JUnit 5 -->
-        <dependency>
-            <groupId>io.qameta.allure</groupId>
-            <artifactId>allure-junit5</artifactId>
-            <version>${allure.junit5.version}</version>
-            <scope>test</scope>
-        </dependency>
 
         <!-- JUnit Jupiter API -->
         <dependency>
@@ -57,5 +50,15 @@
             <version>${json.path.version}</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.5.2</version>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
