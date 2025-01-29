@@ -1,5 +1,11 @@
 A react frontend and a ASP.NET backend for keeping track of your reading.
 
+## Directory Navigation
+
+* .github/workflows - GitHub Actions workflows
+* library-frontend - Frontend web application
+* MyReadingTracker - Backend .NET application
+* Testing - End to End testing projects
 ## Getting Started
 
 Requirements:
