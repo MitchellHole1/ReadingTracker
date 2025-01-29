@@ -37,7 +37,7 @@ const BookTable = () => {
             <th>Name</th>
             <th>Author Name</th>
             <th>Year Published</th>
-            <th>Orginal Language</th>
+            <th>Original Language</th>
             <th>Page Count</th>
             <th>Genres</th>
           </tr>
