@@ -1,10 +1,11 @@
-name: Rest Assured Java API Automation CI
+name: Rest Assured Tests
 
 on:
   workflow_dispatch: 
 
 jobs:
-  build:
+  test:
+    permissions: write-all
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -35,6 +36,6 @@ jobs:
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:
-        name: playwright-report
+        name: restassured-report
         path: ./Testing/Backend/API/RestAssured/target/surefire-reports
         retention-days: 30
