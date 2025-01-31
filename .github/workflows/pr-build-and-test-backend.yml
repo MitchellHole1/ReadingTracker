@@ -1,0 +1,31 @@
+name: PR - Build & test Backend Service
+
+on:
+  pull_request:
+    paths:
+      # We need to build this if the comops was updated
+      - "MyReadingTracker/**"
+
+jobs:
+  build:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./MyReadingTracker
+    
+    steps:
+      - uses: actions/checkout@v4
+        
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+          
+      - name: Install dependencies
+        run: dotnet restore
+        
+      - name: Build
+        run: dotnet build
+        
+      - name: Test with the dotnet CLI
+        run: dotnet test
