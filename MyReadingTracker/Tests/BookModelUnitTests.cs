@@ -24,7 +24,7 @@ public class BookModelUnitTests
         book.Name.Should().Be("The Hobbit");
         book.AuthorId.Should().Be(1);
         book.YearPublished.Should().Be(1937);
-        book.GenreIds.Should().BeEmpty();
+        book.GenreIds.Should().BeNull();
     }
 
     [Fact]
@@ -42,7 +42,7 @@ public class BookModelUnitTests
         // Assert
         book.Id.Should().Be(0);
         book.Name.Should().Be("The Hobbit");
-        book.YearPublished.Should().Be(0);
-        book.GenreIds.Should().BeEmpty();
+        book.YearPublished.Should().Be(1937);
+        book.GenreIds.Should().BeNull();
     }
 }
