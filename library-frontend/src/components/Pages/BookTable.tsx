@@ -7,10 +7,22 @@ const BookTable = () => {
   const [BookSessionState, setBookSessionState] = useState([]);
   const [value, setValue] = useState(0); // integer state
   const [show, setShow] = useState(false);
+  const [render, rerender] = useState(false);
   const handleClose = () => {
     setShow(false);
+    getBooks();
   };
   const handleShow = () => setShow(true);
+
+  function getBooks() {
+    const books = fetch("/api/book");
+    Promise.all([books]).then((responses) => {
+      var books = responses[0].json();
+      Promise.all([books]).then((data) => {
+        setBookSessionState(data[0]);
+      });
+    });
+  }
 
   useEffect(() => {
     document.title = "Books";

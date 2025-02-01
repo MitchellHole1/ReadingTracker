@@ -9,4 +9,8 @@ exports.BooksPage = class BooksPage {
     constructor(page) {
         this.page = page;
     }
+
+    ClickAddBookButton = async () => {
+        await this.page.getByRole('button', { name: 'Add Book' }).click();
+    }
 }

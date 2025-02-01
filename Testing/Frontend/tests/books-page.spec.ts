@@ -26,4 +26,29 @@ test.describe('Books Page Tests', () => {
     await expect(page.locator('text=The Road')).toBeVisible();
   });
 
+  test('Should open a create book model when Add Book button is clicked', async ({ page }) => {
+    await booksPage.ClickAddBookButton();
+    await expect(page.getByRole('dialog').getByText('Add Book')).toBeVisible();
+  });
+
+  test('Should close the create book model when the close button is clicked', async ({ page }) => {
+    await booksPage.ClickAddBookButton();
+    await page.getByRole('button', { name: 'Close' }).click();
+    await expect(page.getByRole('dialog').getByText('Add Book')).not.toBeVisible();
+  });
+
+  test('Should create a book when valid input is provided', async ({ page }) => {
+    await booksPage.ClickAddBookButton();
+    await page.getByRole('textbox', { name: 'Name' }).fill('The Simillarion');
+    await page.getByRole('textbox', { name: 'AuthorId' }).fill('2');
+    await page.getByRole('spinbutton', { name: 'YearPublished' }).fill('1977');
+    await page.getByRole('textbox', { name: 'OriginalLanguage' }).fill('English');
+    await page.locator('#formBasicType').selectOption({ label: 'Novel' });
+    await page.locator('#formBasicGenre').selectOption([{ label: 'Fantasy' }, { label: 'Romance' }]);
+    await page.getByRole('spinbutton', { name: 'Page Count' }).fill('500');
+    await page.getByRole('button', { name: 'Submit' }).click();
+    await expect(page.getByRole('dialog').getByText('Add Book')).not.toBeVisible();
+    await expect(page.locator('text=The Simillarion')).toBeVisible();
+  });
+
 });
