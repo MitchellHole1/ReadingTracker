@@ -37,9 +37,15 @@ test.describe('Books Page Tests', () => {
     await expect(page.getByRole('dialog').getByText('Add Book')).not.toBeVisible();
   });
 
-  test('Should create a book when valid input is provided', async ({ page }) => {
+  const browserBookNames = {
+    'chromium': 'Beren and Luthien',
+    'firefox': 'The Children of Hurin',
+    'Webkit': 'The Silmarillion'
+  }
+  
+  test('Should create a book when valid input is provided', async ({ page, browserName }) => {
     await booksPage.ClickAddBookButton();
-    await page.getByRole('textbox', { name: 'Name' }).fill('The Simillarion');
+    await page.getByRole('textbox', { name: 'Name' }).fill(browserBookNames[browserName]);
     await page.getByRole('textbox', { name: 'AuthorId' }).fill('2');
     await page.getByRole('spinbutton', { name: 'YearPublished' }).fill('1977');
     await page.getByRole('textbox', { name: 'OriginalLanguage' }).fill('English');
@@ -48,7 +54,7 @@ test.describe('Books Page Tests', () => {
     await page.getByRole('spinbutton', { name: 'Page Count' }).fill('500');
     await page.getByRole('button', { name: 'Submit' }).click();
     await expect(page.getByRole('dialog').getByText('Add Book')).not.toBeVisible();
-    await expect(page.locator('text=The Simillarion')).toBeVisible();
+    await expect(page.getByText(browserBookNames[browserName])).toBeVisible();
   });
 
 });
