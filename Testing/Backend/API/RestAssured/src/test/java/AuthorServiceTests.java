@@ -1,3 +1,4 @@
+import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.when;
 import static org.hamcrest.Matchers.*;
 
@@ -51,5 +52,37 @@ public class AuthorServiceTests {
             get("/100").
         then().
             statusCode(404);
+    }
+
+    @Test
+    public void create_author_returns_200_and_created_author() {
+        var id = given().
+            body("{\"name\": \"Jorge Luis Borges\", \"gender\": \"Male\", \"nationality\": \"Argentinian\"}").
+            header("Content-Type", "application/json").
+        when().
+            post("/").
+        then().
+            statusCode(200).
+            body("name", equalTo("Jorge Luis Borges"),
+            "gender", equalTo("Male"),
+            "nationality", equalTo("Argentinian")).extract().path("id");
+        
+        when().
+            get("/" + id).
+        then().
+            statusCode(200).
+            body("id", equalTo(id),
+                "name", equalTo("Jorge Luis Borges"));
+    }
+
+    @Test
+    public void create_author_with_missing_fields_returns_400() {
+        given().
+            body("{\"name\": \"Jorge Luis Borges\"}").
+            header("Content-Type", "application/json").
+        when().
+            post("/").
+        then().
+            statusCode(400);
     }
 }
