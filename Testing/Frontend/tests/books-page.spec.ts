@@ -40,9 +40,9 @@ test.describe('Books Page Tests', () => {
   const browserBookNames = {
     'chromium': 'Beren and Luthien',
     'firefox': 'The Children of Hurin',
-    'Webkit': 'The Silmarillion'
+    'webkit': 'The Silmarillion'
   }
-  
+
   test('Should create a book when valid input is provided', async ({ page, browserName }) => {
     await booksPage.ClickAddBookButton();
     await page.getByRole('textbox', { name: 'Name' }).fill(browserBookNames[browserName]);
