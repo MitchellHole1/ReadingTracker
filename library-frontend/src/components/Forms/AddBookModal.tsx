@@ -44,9 +44,9 @@ const AddBookModal = ({ show, handleClose, handleShow }: Props) => {
     setInputs((values) => ({ ...values, genre: value }));
   }
 
-  const addBook = () => {
-    console.log("Sending request");
-    fetch("/api/book", {
+  const addBook = async (e) => {
+    e.preventDefault();
+    const response = await fetch("/api/book", {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -64,13 +64,9 @@ const AddBookModal = ({ show, handleClose, handleShow }: Props) => {
         genres: inputs.genre,
       }),
     })
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (data) {
-        console.log(data);
-        handleClose;
-      });
+    const data = await response.json();
+    console.log(data);
+    handleClose();
   };
 
   return (
