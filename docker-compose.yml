@@ -22,6 +22,9 @@ services:
 
   reading-tracker-backend:
     image: mitch/my-reading-tracker.api:${TAG:-latest}
+    depends_on:
+      library-db:
+        condition: service_healthy
     container_name: reading-tracker-backend
     ports:
       - "5099:8080"
@@ -31,5 +34,30 @@ services:
     restart: always
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__Postgres=host=library-db;port=5432;database=library;username=postgres;password=password;Pooling=true;
+
     networks:
       - reading-tracker
+
+  library-db:
+    image: postgres:15-bullseye
+    container_name: library-db
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: pg_isready -U postgres -d library
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    environment:
+      - POSGTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=library
+    restart: always
+    volumes:
+      - library_data:/var/lib/postgresql/data/
+    networks:
+      - reading-tracker
+
+volumes:
+  library_data:
