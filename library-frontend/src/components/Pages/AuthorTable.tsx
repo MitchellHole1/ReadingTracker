@@ -1,13 +1,16 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Table, Button, Modal, Form, Pagination } from "react-bootstrap";
 import AddAuthorModal from "../Forms/AddAuthorModal";
+import PaginationComponent from "./PaginationComponent";
 
 const AuthorTable = () => {
   const [AuthorSessionState, setAuthorSessionState] = useState([]);
-  const [pageState, setPageState] = useState({ currentPage: 1, limit: 10 });
+  const [pageState, setPageState] = useState({ currentPage: 1, limit: 10, total: 10});
 
   const [value, setValue] = useState(0); // integer state
   const [show, setShow] = useState(false);
+
+  const host = import.meta.env.VITE_API_BASE_URL ? import.meta.env.VITE_API_BASE_URL : "";
 
   const handleClose = () => {
     setShow(false);
@@ -21,7 +24,7 @@ const AuthorTable = () => {
 
   function getAuthors() {
     const Authors = fetch(
-      "/api/author?PageNumber=" +
+      host + "/api/author?PageNumber=" +
         pageState.currentPage +
         "&PageSize=" +
         pageState.limit
@@ -32,7 +35,7 @@ const AuthorTable = () => {
         console.log(data[0]);
         setAuthorSessionState(data[0].results);
         setPageState({
-          currentPage: data[0].offset,
+          currentPage: data[0].offset / data[0].limit  + 1,
           total: data[0].total,
           limit: 10,
         });
@@ -65,14 +68,7 @@ const AuthorTable = () => {
         </tbody>
         <tfoot></tfoot>
       </Table>
-      <Pagination>
-        <Pagination.First />
-        <Pagination.Prev />
-        <Pagination.Item active>{1}</Pagination.Item>
-        <Pagination.Item>{2}</Pagination.Item>
-        <Pagination.Next />
-        <Pagination.Last />
-      </Pagination>
+      <PaginationComponent pageState={pageState} setPageState={setPageState} setValue={setValue} value={value} />
 
       <Button type="button" variant="primary" onClick={handleShow}>
         Add Author

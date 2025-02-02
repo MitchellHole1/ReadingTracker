@@ -9,6 +9,8 @@ const BookTable = () => {
   const [show, setShow] = useState(false);
   const [render, rerender] = useState(false);
 
+  const host = import.meta.env.VITE_API_BASE_URL ? import.meta.env.VITE_API_BASE_URL : "";
+
   const handleClose = () => {
     setShow(false);
     setValue(value + 1);
@@ -17,7 +19,7 @@ const BookTable = () => {
   const handleShow = () => setShow(true);
 
   function getBooks() {
-    const books = fetch("/api/book");
+    const books = fetch(host + "/api/book");
     Promise.all([books]).then((responses) => {
       var books = responses[0].json();
       Promise.all([books]).then((data) => {
