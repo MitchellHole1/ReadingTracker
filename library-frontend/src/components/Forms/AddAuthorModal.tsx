@@ -17,7 +17,8 @@ const AddAuthorModal = ({ show, handleClose, handleShow }: Props) => {
     setInputs((values) => ({ ...values, [name]: value }));
   }
 
-  const addAuthor = () => {
+  const addAuthor = (e) => {
+    e.preventDefault();
     fetch("/api/author", {
       headers: {
         Accept: "application/json",
@@ -37,7 +38,7 @@ const AddAuthorModal = ({ show, handleClose, handleShow }: Props) => {
       })
       .then(function (data) {
         console.log(data);
-        handleClose;
+        handleClose();
       });
   };
 
