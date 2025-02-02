@@ -4,10 +4,12 @@ import AddAuthorModal from "../Forms/AddAuthorModal";
 
 const AuthorTable = () => {
   const [AuthorSessionState, setAuthorSessionState] = useState([]);
-  const [pageState, setPageState] = useState({ currentPage: 1, limit: 10 });
+  const [pageState, setPageState] = useState({ currentPage: 1, limit: 10, total: 10});
 
   const [value, setValue] = useState(0); // integer state
   const [show, setShow] = useState(false);
+
+  const host = import.meta.env.VITE_API_BASE_URL ? import.meta.env.VITE_API_BASE_URL : "";
 
   const handleClose = () => {
     setShow(false);
@@ -21,7 +23,7 @@ const AuthorTable = () => {
 
   function getAuthors() {
     const Authors = fetch(
-      "/api/author?PageNumber=" +
+      host + "/api/author?PageNumber=" +
         pageState.currentPage +
         "&PageSize=" +
         pageState.limit
@@ -32,12 +34,28 @@ const AuthorTable = () => {
         console.log(data[0]);
         setAuthorSessionState(data[0].results);
         setPageState({
-          currentPage: data[0].offset,
+          currentPage: data[0].offset + 1,
           total: data[0].total,
           limit: 10,
         });
       });
     });
+  }
+
+  function renderPagination(pageState) {
+    const options = [];
+    for (let i = 1; i <= pageState.total / 10; i++) {
+      console.log(pageState.currentPage)
+      if (i === pageState.currentPage) {
+        options.push(
+          <Pagination.Item key={i} onClick={() => setPageState({ currentPage: i, limit: 10, total: 10})} active>{i}</Pagination.Item>
+        );
+        continue;
+      }
+      options.push(<Pagination.Item key={i} onClick={() => { setPageState({ currentPage: i, limit: 10, total: 10}); setValue(value + 1)}}>{i}</Pagination.Item>);
+    }
+
+    return options;
   }
 
   const getAuthorsHook = useMemo(() => getAuthors(), [value]);
@@ -68,8 +86,7 @@ const AuthorTable = () => {
       <Pagination>
         <Pagination.First />
         <Pagination.Prev />
-        <Pagination.Item active>{1}</Pagination.Item>
-        <Pagination.Item>{2}</Pagination.Item>
+        {renderPagination(pageState)}
         <Pagination.Next />
         <Pagination.Last />
       </Pagination>
