@@ -23,8 +23,8 @@ public class AuthorService : IAuthorService
     {
         var authors = _context.Authors
             .AsNoTracking()
-            .Skip((request.PageNumber - 1) * request.PageSize).Take(request.PageSize)
             .OrderBy(p => p.Name)
+            .Skip((request.PageNumber - 1) * request.PageSize).Take(request.PageSize)
             .ToList();
         
         return new PaginatedList<Author>(authors, _context.Authors.Count(), request.PageNumber, request.PageSize);

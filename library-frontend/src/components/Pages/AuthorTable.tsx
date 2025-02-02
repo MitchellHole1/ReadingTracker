@@ -11,12 +11,34 @@ const AuthorTable = () => {
 
   const handleClose = () => {
     setShow(false);
+    getAuthors();
   };
   const handleShow = () => setShow(true);
 
   useEffect(() => {
     document.title = "Authors";
   });
+
+  function getAuthors() {
+    const Authors = fetch(
+      "/api/author?PageNumber=" +
+        pageState.currentPage +
+        "&PageSize=" +
+        pageState.limit
+    );
+    Promise.all([Authors]).then((responses) => {
+      var Authors = responses[0].json();
+      Promise.all([Authors]).then((data) => {
+        console.log(data[0]);
+        setAuthorSessionState(data[0].results);
+        setPageState({
+          currentPage: data[0].offset,
+          total: data[0].total,
+          limit: 10,
+        });
+      });
+    });
+  }
 
   useEffect(
     function getAuthors() {
