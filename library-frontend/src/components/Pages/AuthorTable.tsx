@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Table, Button, Modal, Form, Pagination } from "react-bootstrap";
 import AddAuthorModal from "../Forms/AddAuthorModal";
+import PaginationComponent from "./PaginationComponent";
 
 const AuthorTable = () => {
   const [AuthorSessionState, setAuthorSessionState] = useState([]);
@@ -34,28 +35,12 @@ const AuthorTable = () => {
         console.log(data[0]);
         setAuthorSessionState(data[0].results);
         setPageState({
-          currentPage: data[0].offset + 1,
+          currentPage: data[0].offset / data[0].limit  + 1,
           total: data[0].total,
           limit: 10,
         });
       });
     });
-  }
-
-  function renderPagination(pageState) {
-    const options = [];
-    for (let i = 1; i <= pageState.total / 10; i++) {
-      console.log(pageState.currentPage)
-      if (i === pageState.currentPage) {
-        options.push(
-          <Pagination.Item key={i} onClick={() => setPageState({ currentPage: i, limit: 10, total: 10})} active>{i}</Pagination.Item>
-        );
-        continue;
-      }
-      options.push(<Pagination.Item key={i} onClick={() => { setPageState({ currentPage: i, limit: 10, total: 10}); setValue(value + 1)}}>{i}</Pagination.Item>);
-    }
-
-    return options;
   }
 
   const getAuthorsHook = useMemo(() => getAuthors(), [value]);
@@ -83,13 +68,7 @@ const AuthorTable = () => {
         </tbody>
         <tfoot></tfoot>
       </Table>
-      <Pagination>
-        <Pagination.First />
-        <Pagination.Prev />
-        {renderPagination(pageState)}
-        <Pagination.Next />
-        <Pagination.Last />
-      </Pagination>
+      <PaginationComponent pageState={pageState} setPageState={setPageState} setValue={setValue} value={value} />
 
       <Button type="button" variant="primary" onClick={handleShow}>
         Add Author
