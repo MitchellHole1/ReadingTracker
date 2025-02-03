@@ -3,6 +3,8 @@ using AutoMapper.Configuration.Annotations;
 using Microsoft.AspNetCore.Mvc;
 using MyReadingTracker.Extensions;
 using MyReadingTracker.Models;
+using MyReadingTracker.Resources;
+using MyReadingTracker.Resources.Requests;
 using MyReadingTracker.Resources.Requests.Books;
 using MyReadingTracker.Resources.Responses.Resources;
 using MyReadingTracker.Services;
@@ -23,10 +25,10 @@ public class BookController : ControllerBase
     }
     
     [HttpGet]
-    public IEnumerable<BookAuthorResource> GetAll()
+    public IActionResult GetAll([FromQuery] GetBooksRequest request)
     {
-        var books = _service.GetAll();
-        return _mapper.Map<IEnumerable<Book>, IEnumerable<BookAuthorResource>>(books);
+        var books = _service.GetAll(request);
+        return Ok(books);
     }
     
     [HttpGet("{id}")]
