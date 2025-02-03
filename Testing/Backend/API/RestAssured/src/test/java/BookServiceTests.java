@@ -24,7 +24,9 @@ public class BookServiceTests {
             get("/").
         then().
             statusCode(200).
-            body("$", hasSize(greaterThanOrEqualTo(8)));
+            body("results", hasSize(greaterThanOrEqualTo(8)),
+            "offset", equalTo(0),
+                "limit", equalTo(10));
     }
 
     @Test
