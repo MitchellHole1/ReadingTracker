@@ -1,9 +1,13 @@
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using MyReadingTracker.Data;
 using MyReadingTracker.Models;
+using MyReadingTracker.Resources;
+using MyReadingTracker.Resources.Requests;
 using MyReadingTracker.Resources.Requests.Books;
 using MyReadingTracker.Resources.Responses;
 using MyReadingTracker.Resources.Responses.Book;
+using MyReadingTracker.Resources.Responses.Resources;
 
 namespace MyReadingTracker.Services;
 
@@ -11,22 +15,30 @@ public class BookService : IBookService
 {
     private readonly LibraryContext _context;
     private readonly ILogger<BookService> _logger;
+    private readonly IMapper _mapper;
     
-    public BookService(LibraryContext context, ILogger<BookService> logger)
+    public BookService(LibraryContext context, ILogger<BookService> logger, IMapper mapper)
     {
         _context = context;
         _logger = logger;
+        _mapper = mapper;
     }
     
-    public IEnumerable<Book> GetAll()
+    public PaginatedList<BookAuthorResource> GetAll(GetBooksRequest request)
     {
-        return _context.Books
+        var books = _context.Books
             .Include(p => p.Author)
             .Include(p => p.Genres)
             .OrderBy(p => p.Author.Name)
             .ThenBy(p => p.Name)
+            .Skip((request.PageNumber - 1) * request.PageSize).Take(request.PageSize)
             .AsNoTracking()
-            .ToList();    
+            .ToList();
+
+        var booksMapped = _mapper.Map<List<Book>, List<BookAuthorResource>>(books);
+        
+        return new PaginatedList<BookAuthorResource>(booksMapped, _context.Books.Count(), request.PageNumber, request.PageSize);
+
     }
 
     public Book? GetById(int id)
