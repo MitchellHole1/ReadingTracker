@@ -29,5 +29,7 @@ jobs:
 
       - name: Adding markdown
         run: |
-          cd BenchmarkDotNet.Artifacts\results
+          pwd
+          ls
+          cd ./BenchmarkDotNet.Artifacts\results
           cat Benchmarks.BenchmarkHarness-report-github.md  >> $GITHUB_STEP_SUMMARY
