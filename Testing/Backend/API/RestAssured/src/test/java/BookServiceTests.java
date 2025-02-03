@@ -25,7 +25,8 @@ public class BookServiceTests {
         then().
             statusCode(200).
             body("results", hasSize(greaterThanOrEqualTo(8)),
-            "offset", equalTo(0),
+                "results", everyItem(hasKey("id")),
+                "offset", equalTo(0),
                 "limit", equalTo(10));
     }
 
