@@ -1,8 +1,8 @@
 name: Benchmark backend application
 
 on:
+  workflow_dispatch:
   pull_request: 
-  workflow_dispatch: 
 
 jobs:
   build:
@@ -29,7 +29,5 @@ jobs:
 
       - name: Adding markdown
         run: |
-          pwd
-          ls
-          cd ./BenchmarkDotNet.Artifacts\results
+          cd ./BenchmarkDotNet.Artifacts/results
           cat Benchmarks.BenchmarkHarness-report-github.md  >> $GITHUB_STEP_SUMMARY
