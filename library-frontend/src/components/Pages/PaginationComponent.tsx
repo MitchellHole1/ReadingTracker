@@ -15,15 +15,19 @@ const PaginationComponent = ({ pageState, setPageState, setValue, value }: Props
 
   function renderPagination(pageState) {
     const options = [];
-    for (let i = 1; i <= pageState.total / 10; i++) {
+    let numPages = pageState.total / 10;
+    if (pageState.total % 10 === 0) {
+      numPages -= 1;
+    }
+    for (let i = 0; i <= numPages; i++) {
       console.log(pageState.currentPage)
-      if (i === pageState.currentPage) {
+      if (i + 1 === pageState.currentPage) {
         options.push(
-          <Pagination.Item key={i} onClick={() => setPageState({ currentPage: i, limit: 10, total: 10})} active>{i}</Pagination.Item>
+          <Pagination.Item key={i} onClick={() => setPageState({ currentPage: i + 1, limit: 10, total: 10})} active>{i + 1}</Pagination.Item>
         );
         continue;
       }
-      options.push(<Pagination.Item key={i} onClick={() => { setPageState({ currentPage: i, limit: 10, total: 10}); setValue(value + 1)}}>{i}</Pagination.Item>);
+      options.push(<Pagination.Item key={i} onClick={() => { setPageState({ currentPage: i + 1, limit: 10, total: 10}); setValue(value + 1)}}>{i + 1}</Pagination.Item>);
     }
 
     return options;
