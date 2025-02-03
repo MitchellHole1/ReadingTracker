@@ -1,0 +1,32 @@
+name: Benchmark backend application
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./MyReadingTracker/Benchmarks
+    
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+          
+      - name: Run docker-compose
+        uses: hoverkraft-tech/compose-action@v2.0.1
+        with:
+          compose-file: "./docker-compose.yml"
+
+      - name: Execute Benchmarks
+        run: dotnet run -c Release
+
+      - name: Adding markdown
+        run: |
+          cd ./BenchmarkDotNet.Artifacts/results
+          cat Benchmarks.BenchmarkHarness-report-github.md  >> $GITHUB_STEP_SUMMARY
