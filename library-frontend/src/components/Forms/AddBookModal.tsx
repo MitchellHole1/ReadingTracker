@@ -11,12 +11,13 @@ interface Props {
 const AddBookModal = ({ show, handleClose, handleShow }: Props) => {
   const [inputs, setInputs] = useState({});
   const [value, setValue] = useState(0); // integer state
-
   const [GenreState, setGenreState] = useState([]);
+
+  const host = import.meta.env.VITE_API_BASE_URL ? import.meta.env.VITE_API_BASE_URL : "";
 
   useEffect(
     function getGenres() {
-      const books = fetch("/api/genre");
+      const books = fetch(host + "/api/genre");
       Promise.all([books]).then((responses) => {
         var books = responses[0].json();
         Promise.all([books]).then((data) => {
@@ -46,7 +47,7 @@ const AddBookModal = ({ show, handleClose, handleShow }: Props) => {
 
   const addBook = async (e) => {
     e.preventDefault();
-    const response = await fetch("/api/book", {
+    const response = await fetch(host + "/api/book", {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",

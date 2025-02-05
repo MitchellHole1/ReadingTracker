@@ -11,6 +11,8 @@ interface Props {
 const AddAuthorModal = ({ show, handleClose, handleShow }: Props) => {
   const [inputs, setInputs] = useState({});
 
+  const host = import.meta.env.VITE_API_BASE_URL ? import.meta.env.VITE_API_BASE_URL : "";
+
   function handleValueChange(event: { target: { name: any; value: any } }) {
     const name = event.target.name;
     const value = event.target.value;
@@ -19,7 +21,7 @@ const AddAuthorModal = ({ show, handleClose, handleShow }: Props) => {
 
   const addAuthor = (e) => {
     e.preventDefault();
-    fetch("/api/author", {
+    fetch(host + "/api/author", {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
