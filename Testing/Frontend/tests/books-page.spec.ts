@@ -16,6 +16,7 @@ test.describe('Books Page Tests', () => {
 
   test('Should land on the books page', async ({ page }) => {
     await expect(page).toHaveTitle(/Books/);
+    await expect(page.url()).toContain(booksPage.url);
   });
 
   test('Should display a list of books', async ({ page }) => {
