@@ -1,8 +1,12 @@
 import { Page } from "@playwright/test";
+import { IPageObject } from './page-object';
 
-exports.BooksPage = class BooksPage {
+
+
+exports.BooksPage = class BooksPage implements IPageObject {
 
     page: Page;
+    url = '/books';
 
     table_headers = ['Name', 'Author Name', 'Year Published', 'Original Language', 'Page Count', 'Genres',];
 
