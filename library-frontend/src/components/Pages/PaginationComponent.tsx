@@ -13,7 +13,7 @@ interface Props {
 
 const PaginationComponent = ({ pageState, setPageState, setValue, value }: Props) => {
 
-  function renderPagination(pageState) {
+  function renderPagination(pageState: { currentPage: any; limit?: number; total: any; }) {
     const options = [];
     let numPages = pageState.total / 10;
     if (pageState.total % 10 === 0) {
