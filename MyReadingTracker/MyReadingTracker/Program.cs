@@ -3,6 +3,7 @@ using ContosoPizza.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using MyReadingTracker.Data;
+using MyReadingTracker.Infrastructure.CloudStorage;
 using MyReadingTracker.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -39,6 +40,7 @@ builder.Services.AddScoped<IAuthorService, AuthorService>();
 builder.Services.AddScoped<IReadingSessionService, ReadingSessionService>();
 builder.Services.AddScoped<ISeriesService, SeriesService>();
 builder.Services.AddScoped<IGenreService, GenreService>();
+builder.Services.AddSingleton<ICloudStorage, GoogleCloudStorage>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

@@ -33,6 +33,7 @@ services:
       dockerfile: ./Dockerfile
     restart: always
     environment:
+      - STORAGE_EMULATOR_HOST=gcp-storage-emulator:8080/storage/v1/
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__Postgres=host=library-db;port=5432;database=library;username=postgres;password=password;Pooling=true;
 
@@ -58,6 +59,27 @@ services:
       - library_data:/var/lib/postgresql/data/
     networks:
       - reading-tracker
+  
+  gcp-storage-emulator:
+    image: oittaa/gcp-storage-emulator
+    container_name: gcp-storage-emulator
+    ports:
+      - "9023:8080"
+    volumes:
+      - image_data:/storage
+    networks:
+      - reading-tracker
+    entrypoint:
+      - /bin/sh
+      - -c
+      - |
+        apt update
+        yes | apt install curl
+        gcp-storage-emulator start &
+        bg_pid=$!
+        curl -s -X POST --retry 10 --retry-all-errors --retry-delay 5 http://localhost:8080/storage/v1/b -H 'Content-Type: application/json' -d '{"name": "book-cover-images"}'
+        wait $bg_pid
 
 volumes:
   library_data:
+  image_data:

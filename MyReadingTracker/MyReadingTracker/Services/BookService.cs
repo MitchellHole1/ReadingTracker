@@ -1,6 +1,7 @@
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using MyReadingTracker.Data;
+using MyReadingTracker.Infrastructure.CloudStorage;
 using MyReadingTracker.Models;
 using MyReadingTracker.Resources;
 using MyReadingTracker.Resources.Requests;
@@ -16,12 +17,14 @@ public class BookService : IBookService
     private readonly LibraryContext _context;
     private readonly ILogger<BookService> _logger;
     private readonly IMapper _mapper;
+    private readonly ICloudStorage _cloudStorage;
     
-    public BookService(LibraryContext context, ILogger<BookService> logger, IMapper mapper)
+    public BookService(LibraryContext context, ILogger<BookService> logger, IMapper mapper, ICloudStorage cloudStorage)
     {
         _context = context;
         _logger = logger;
         _mapper = mapper;
+        _cloudStorage = cloudStorage;
     }
     
     public PaginatedList<BookAuthorResource> GetAll(GetBooksRequest request)
