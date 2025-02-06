@@ -6,10 +6,6 @@ const ReadingTable = () => {
   const [value, setValue] = useState(0); // integer state
 
   const host = import.meta.env.VITE_API_BASE_URL ? import.meta.env.VITE_API_BASE_URL : "";
-
-  useEffect(() => {
-    document.title = "Reading Tracker";
-  });
   
   useEffect(
     function getReadingSessions() {

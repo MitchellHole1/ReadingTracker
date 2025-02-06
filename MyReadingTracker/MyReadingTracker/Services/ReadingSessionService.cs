@@ -23,6 +23,19 @@ public class ReadingSessionService : IReadingSessionService
             .AsNoTracking()
             .Include(readingSession => readingSession.Book)
             .ThenInclude(book => book.Author)
+            .Where(readingSession => readingSession.End != null)
+            .OrderByDescending(readingSession => readingSession.End)
+            .ToList();
+    }
+
+    public IEnumerable<ReadingSession> GetCurrentReadings()
+    {
+        return _context.ReadingSessions
+            .AsNoTracking()
+            .Include(readingSession => readingSession.Book)
+            .ThenInclude(book => book.Author)
+            .Where(readingSession => readingSession.End == null)
+            .OrderByDescending(readingSession => readingSession.Start)
             .ToList();
     }
     

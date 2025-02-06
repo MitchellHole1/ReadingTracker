@@ -4,9 +4,9 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Container } from "reactstrap";
 
 import Header from "./components/Header";
-import ReadingTable from "./components/Pages/ReadingTable";
-import AuthorTable from "./components/Pages/AuthorTable";
-import BookTable from "./components/Pages/BookTable";
+import AuthorTable from "./components/Tables/AuthorTable";
+import BookTable from "./components/Tables/BookTable";
+import ReadingPage from "./components/Pages/ReadingPage";
 
 function App() {
 
@@ -18,8 +18,8 @@ function App() {
           <br />
           <div className="content">
             <Routes>
-              <Route path="/" element={<ReadingTable />}></Route>
-              <Route path="/tracker" element={<ReadingTable />}></Route>
+              <Route path="/" element={<ReadingPage />}></Route>
+              <Route path="/tracker" element={<ReadingPage />}></Route>
               <Route path="/books" element={<BookTable />}></Route>
               <Route path="/authors" element={<AuthorTable />}></Route>
             </Routes>

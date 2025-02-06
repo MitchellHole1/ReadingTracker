@@ -25,6 +25,12 @@ public class ReadingSessionController : ControllerBase
     {
         return _service.GetAll();
     }
+
+    [HttpGet("current")]
+    public IEnumerable<ReadingSession> GetCurrentReadings()
+    {
+        return _service.GetCurrentReadings();
+    }
     
     [HttpGet("{id}")]
     public ActionResult<ReadingSession> GetById(int id)
