@@ -18,6 +18,8 @@ public class Book : AuditableEntity
     public required int YearPublished { get; set; }
     
     public string? OriginalLanguage { get; set; }
+
+    public string? CoverImageFileName { get; set; }
     
     public ICollection<Genre>? Genres { get; set; }
     public ICollection<int>? GenreIds { get; set; }

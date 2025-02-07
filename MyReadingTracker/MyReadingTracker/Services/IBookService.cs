@@ -12,6 +12,7 @@ public interface IBookService
 {
     PaginatedList<BookAuthorResource> GetAll(GetBooksRequest request);
     Book? GetById(int id);
+    string? GetCoverImageFileName(int id);
     SaveBookResponse Create(CreateBookRequest newBook);
     void Update(Book updatedBook);
     void DeleteById(int id);
