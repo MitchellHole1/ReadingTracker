@@ -2,6 +2,7 @@ using AutoMapper;
 using AutoMapper.Configuration.Annotations;
 using Microsoft.AspNetCore.Mvc;
 using MyReadingTracker.Extensions;
+using MyReadingTracker.Infrastructure.CloudStorage;
 using MyReadingTracker.Models;
 using MyReadingTracker.Resources;
 using MyReadingTracker.Resources.Requests;
@@ -17,11 +18,26 @@ public class BookController : ControllerBase
 {
     private readonly IBookService _service;
     private readonly IMapper _mapper;
+    private readonly ICloudStorage _cloudStorage;
     
-    public BookController(IBookService service, IMapper mapper)
+    public BookController(IBookService service, IMapper mapper, ICloudStorage cloudStorage)
     {
         _service = service;
         _mapper = mapper;
+        _cloudStorage = cloudStorage;
+    }
+    
+    // create an endpoint that gets a file from the cloud storage
+    [HttpGet("{id}/cover-image")]
+    public async Task<IActionResult> GetFile(int id)
+    {
+        var fileName = _service.GetCoverImageFileName(id);
+        if (fileName == null)
+        {
+            return NotFound();
+        }
+        var stream = await _cloudStorage.GetFile(fileName);
+        return File(stream, "image/jpeg");
     }
     
     [HttpGet]
@@ -56,6 +72,7 @@ public class BookController : ControllerBase
         
         return Ok(createdBook.BookResource);
     }
+
     
     /*[HttpPut("{id}")]
     public IActionResult Update(int id, Book updatedBook)

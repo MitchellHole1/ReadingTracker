@@ -42,7 +42,7 @@ public class BookService : IBookService
         
         return new PaginatedList<BookAuthorResource>(booksMapped, _context.Books.Count(), request.PageNumber, request.PageSize);
 
-    }
+    }   
 
     public Book? GetById(int id)
     {
@@ -51,6 +51,12 @@ public class BookService : IBookService
             .Include(p => p.Genres)
             .AsNoTracking()
             .FirstOrDefault(p => p.Id == id);
+    }
+
+    public string? GetCoverImageFileName(int id)
+    {
+        var book = _context.Books.Find(id);
+        return book?.CoverImageFileName;
     }
     
     public SaveBookResponse Create(CreateBookRequest newBook)
