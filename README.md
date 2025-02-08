@@ -23,7 +23,7 @@ Frontend: http://localhost:3000/
 Backend: http://localhost:5099/swagger/index.html
 
 Home Page
-![](img/home.png "Home")
+![](img/home.png? "Home")
 
 Book List
 ![](img/books.png "Book List")
