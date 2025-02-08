@@ -3,12 +3,16 @@ import { Button, Table } from "react-bootstrap";
 
 import AddBookModal from "../Forms/AddBookModal";
 import PaginationComponent from "./PaginationComponent";
+import AddCoverImageModal from "../Forms/AddCoverImageModal";
 
 const BookTable = () => {
   const [BookSessionState, setBookSessionState] = useState([]);
   const [pageState, setPageState] = useState({ currentPage: 1, limit: 10, total: 10});
   const [value, setValue] = useState(0); // integer state
   const [show, setShow] = useState(false);
+  const [showCover, setShowCover] = useState(false);
+  const [coverBookId, setCoverBookId] = useState(0);
+
 
   const host = import.meta.env.VITE_API_BASE_URL ? import.meta.env.VITE_API_BASE_URL : "";
 
@@ -17,7 +21,17 @@ const BookTable = () => {
     setValue(value + 1);
   };
 
+  const handleCloseCover = () => {
+    setShowCover(false);
+    setValue(value + 1);
+  };
+
   const handleShow = () => setShow(true);
+
+  const handleShowCover = () => {
+    setShowCover(true);
+  }
+
 
   function getBooks() {
     const books = fetch(host + "/api/book?PageNumber=" +
@@ -54,6 +68,7 @@ const BookTable = () => {
             <th>Original Language</th>
             <th>Page Count</th>
             <th>Genres</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -66,6 +81,18 @@ const BookTable = () => {
                 <td>{listValue.originalLanguage}</td>
                 <td>{listValue.pages}</td>
                 <td>{listValue.genres.map((a) => a.name).join(", ")}</td>
+                <td>
+                  <Button
+                    type="button"
+                    variant="primary"
+                    onClick={() => {
+                      setCoverBookId(listValue.id);
+                      handleShowCover();
+                    }}
+                  >
+                    Add Cover Image
+                  </Button>
+                </td>
               </tr>
             );
           })}
@@ -81,6 +108,13 @@ const BookTable = () => {
         show={show}
         handleClose={handleClose}
         handleShow={handleShow}
+      />
+
+      <AddCoverImageModal
+        bookId={coverBookId}
+        show={showCover}
+        handleClose={handleCloseCover}
+        handleShow={handleShowCover}
       />
     </>
   );

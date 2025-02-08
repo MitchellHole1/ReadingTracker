@@ -57,8 +57,7 @@ public static class DbInitializer
         var book6 = new Book { Name = "The Fellowship of the Ring", Pages = 432, Author = author2, YearPublished = 1954, OriginalLanguage = "English", Type = BookType.Novel, Genres = new List<Genre> { genre3 } };
         var book7 = new Book { Name = "The Two Towers", Pages = 448, Author = author2, YearPublished = 1954, OriginalLanguage = "English", Type = BookType.Novel, Genres = new List<Genre> { genre3 } };
         var book8 = new Book { Name = "The Return of the King", Pages = 432, Author = author2, YearPublished = 1955, OriginalLanguage = "English", Type = BookType.Novel, Genres = new List<Genre> { genre3 } };
-        var book9 = new Book { Name = "Days of Shattered Faith", Pages = 600, Author = author3, YearPublished = 1955, OriginalLanguage = "English", Type = BookType.Novel, Genres = new List<Genre> { genre3 }, CoverImageFileName = "MyCoolPicture" };
-        
+        var book9 = new Book { Name = "Days of Shattered Faith", Pages = 600, Author = author3, YearPublished = 1955, OriginalLanguage = "English", Type = BookType.Novel, Genres = new List<Genre> { genre3 } };
         var readingSession1 = new ReadingSession { Book = book1, Start = new DateTime(2023, 1, 1).ToUniversalTime(), End = new DateTime(2023, 1, 31).ToUniversalTime(), Rating = 100 };
         var readingSession2 = new ReadingSession { Book = book3, Start = new DateTime(2024, 2, 1).ToUniversalTime(), End = new DateTime(2024, 2, 28).ToUniversalTime(), Rating = 100 };
         var readingSession3 = new ReadingSession { Book = book9, Start = new DateTime(2025, 1, 29).ToUniversalTime(), End = null, Rating = null};
