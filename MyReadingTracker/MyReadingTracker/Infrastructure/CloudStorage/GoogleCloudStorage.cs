@@ -16,7 +16,7 @@ public class GoogleCloudStorage : ICloudStorage
         _logger = logger;
         var builder = new StorageClientBuilder()
         {
-            EmulatorDetection = isLocal ? EmulatorDetection.EmulatorOnly : EmulatorDetection.ProductionOnly
+            EmulatorDetection = isLocal ? EmulatorDetection.EmulatorOnly : EmulatorDetection.ProductionOnly,
         };
         _storageClient = builder.Build();
     }
@@ -29,7 +29,18 @@ public class GoogleCloudStorage : ICloudStorage
         return stream;
     }
 
-    public void CreateFile()
+    public async Task UploadFile(IFormFile file)
     {
+        try {
+            using (var memoryStream = new MemoryStream())
+            {
+                await file.CopyToAsync(memoryStream);
+                memoryStream.Position = 0;
+                await _storageClient.UploadObjectAsync(BucketName, file.FileName, file.ContentType, memoryStream);
+            }
+        } 
+        catch (System.Net.Http.HttpRequestException e) {
+            _logger.LogError(e, "Error uploading file to Google Cloud Storage");
+        }
     }
 }

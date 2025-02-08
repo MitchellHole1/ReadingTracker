@@ -106,7 +106,7 @@ public class BookService : IBookService
     
     public void Update(Book updatedBook)
     {
-        _context.Books.Update(updatedBook);
+        _context.Entry(updatedBook).State = EntityState.Modified;
         _context.SaveChanges();
     }
     

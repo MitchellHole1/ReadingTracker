@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.Configuration.Annotations;
 using Microsoft.AspNetCore.Mvc;
@@ -29,7 +30,7 @@ public class BookController : ControllerBase
     
     // create an endpoint that gets a file from the cloud storage
     [HttpGet("{id}/cover-image")]
-    public async Task<IActionResult> GetFile(int id)
+    public async Task<IActionResult> GetCoverImage(int id)
     {
         var fileName = _service.GetCoverImageFileName(id);
         if (fileName == null)
@@ -39,7 +40,25 @@ public class BookController : ControllerBase
         var stream = await _cloudStorage.GetFile(fileName);
         return File(stream, "image/jpeg");
     }
-    
+
+    [HttpPatch("{id}/cover-image")]
+    public async Task<IActionResult> UpdateCoverImage(int id, IFormFile file)
+    {
+        var book = _service.GetById(id);
+        if (book == null)
+        {
+            return NotFound();
+        }
+        
+        var fileName = file.FileName;
+        await _cloudStorage.UploadFile(file);
+
+        book.CoverImageFileName = fileName;
+        _service.Update(book);
+
+        return NoContent();
+    }
+
     [HttpGet]
     public IActionResult GetAll([FromQuery] GetBooksRequest request)
     {

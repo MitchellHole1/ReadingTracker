@@ -3,5 +3,5 @@
 public interface ICloudStorage
 {
     public Task<Stream> GetFile(string filename);
-    public void CreateFile();
+    public Task UploadFile(IFormFile file);
 }

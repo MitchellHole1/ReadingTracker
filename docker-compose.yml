@@ -67,12 +67,16 @@ services:
       - "9023:8080"
     volumes:
       - image_data:/storage
+      - ./server.py:/tmp/server.py
     networks:
       - reading-tracker
     entrypoint:
       - /bin/sh
       - -c
       - |
+        rm -r /app/build
+        cp /tmp/server.py /app/src/gcp_storage_emulator/server.py
+        pip install .
         apt update
         yes | apt install curl
         gcp-storage-emulator start &
