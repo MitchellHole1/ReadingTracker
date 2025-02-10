@@ -20,12 +20,12 @@ jobs:
 
       - id: auth
         name: Authenticate to Google Cloud
-        uses: google-github-actions/auth
+        uses: google-github-actions/auth@v2
         with:
           credentials_json: '${{ secrets.GCP_CREDENTIALS}}'
 
       - name: Setup gcloud
-        uses: google-github-actions/setup-gcloud
+        uses: google-github-actions/setup-gcloud@v2
         
       - name: test
         run: |
