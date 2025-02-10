@@ -29,5 +29,5 @@ jobs:
         
       - name: test
         run: |
-          gcloud config get-value projec
+          gcloud config get-value project
       
