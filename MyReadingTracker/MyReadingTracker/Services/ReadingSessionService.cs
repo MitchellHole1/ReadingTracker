@@ -53,6 +53,13 @@ public class ReadingSessionService : IReadingSessionService
         try
         {
             _logger.LogInformation("Creating a new reading session.");
+
+            if (newReadingSession.Start > newReadingSession.End)
+            {
+                _logger.LogWarning("Start date is after end date.");
+                return new SaveReadingSessionResponse("Start date is after end date.");
+            }
+            
             var existBook = _context.Books.Find(newReadingSession.BookId);
             if (existBook is null)
             {
