@@ -1,7 +1,9 @@
 name: Build and Publish Images
 
 on:
-  pull_request: 
+  push:
+    branches:
+      - main
 
 env:
   PROJECT_ID: logical-contact-396619
