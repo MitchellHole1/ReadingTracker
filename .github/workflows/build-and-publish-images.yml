@@ -6,7 +6,7 @@ on:
 env:
   PROJECT_ID: logical-contact-396619
   GAR_NAME: reading-tracker
-  GAR_LOCATION: us-central-1
+  GAR_LOCATION: us-central1
 
 jobs:
   build:
