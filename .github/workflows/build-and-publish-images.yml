@@ -52,11 +52,11 @@ jobs:
           
           cd library-frontend
           docker buildx build -f Dockerfile -t libraryfrontend:build .
-          docker image tag libraryfrontend:build ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/docker-registry/services/library-frontend:${{ steps.gitversion.outputs.semVer }}
-          docker push --all-tags ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/docker-registry/services/library-frontend
+          docker image tag libraryfrontend:build ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/reading-tracker/services/library-frontend:${{ steps.gitversion.outputs.semVer }}
+          docker push --all-tags ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/reading-tracker/services/library-frontend
           
           cd ../MyReadingTracker/MyReadingTracker/
           docker buildx build -f Dockerfile -t librarybackend:build .
-          docker image tag librarybackend:build ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/docker-registry/services/library-backend:${{ steps.gitversion.outputs.semVer }}
-          docker push --all-tags ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/docker-registry/services/library-backend
+          docker image tag librarybackend:build ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/reading-tracker/services/library-backend:${{ steps.gitversion.outputs.semVer }}
+          docker push --all-tags ${{ env.GAR_LOCATION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/reading-tracker/services/library-backend
 
